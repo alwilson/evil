@@ -1,5 +1,7 @@
 # Evil Bit Netfilter Module
-Linux netfilter module to toggle evil bit (RFC 3514) in all outgoing IPV4 packets.
+Linux netfilter module to toggle evil bit (RFC 3514) in all outgoing IPv4 packets.
+
+The evil bit is an unused, reserved bit in the header of in every IPv4 packet and as an April Fool's joke someone submitted an RFC to have it mark packets that have "evil" intentions. So if you're thinking of doing anything shady then make sure you insert this module into your kernel so that all your outgoing packets get marked as evil!
 
 Inspired by [this blog post and kernel patch](https://blog.benjojo.co.uk/post/evil-bit-RFC3514-real-world-usage).
 
