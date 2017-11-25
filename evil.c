@@ -1,3 +1,4 @@
+#include <linux/version.h>
 #include <linux/init.h>
 #include <linux/module.h>
 #include <linux/kernel.h>
@@ -25,13 +26,21 @@ static struct nf_hook_ops evil_nf_ops = {
 static int evil_init(void)
 {
 	pr_debug("Becoming evil!\n");
+	#if LINUX_VERSION_CODE > KERNEL_VERSION(4, 13, 0)
+	return nf_register_net_hook(&init_net, &evil_nf_ops);
+	#else
 	return nf_register_hook(&evil_nf_ops);
+	#endif
 }
 
 static void evil_exit(void)
 {
 	pr_debug("Repentance complete.\n");
+	#if LINUX_VERSION_CODE > KERNEL_VERSION(4, 13, 0)
+	nf_unregister_net_hook(&init_net, &evil_nf_ops);
+	#else
 	nf_unregister_hook(&evil_nf_ops);
+	#endif
 }
 
 static unsigned int evil_hook(void *priv, struct sk_buff *skb,
